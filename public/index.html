@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WAR JKT48 Auth Server</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --primary: #ff3e6c;
+      --primary-dark: #d32a53;
+      --bg: #f9f9fb;
+      --card: #fff;
+      --text: #232323;
+      --border: #ececec;
+      --success: #43b581;
+      --error: #e74c3c;
+      --shadow: 0 2px 16px 0 rgba(0,0,0,0.06);
+      --radius: 14px;
+    }
+    html, body {
+      background: var(--bg);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      color: var(--text);
+    }
+    .container {
+      max-width: 540px;
+      margin: 40px auto 20px auto;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 34px 28px 24px 28px;
+      position: relative;
+      min-height: 400px;
+    }
+    h2 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      text-align: center;
+      font-size: 2.05rem;
+      color: var(--primary-dark);
+      letter-spacing: 1px;
+    }
+    h3 {
+      margin-bottom: 10px;
+      color: var(--primary);
+      font-size: 1.15rem;
+      letter-spacing: 0.7px;
+      margin-top: 30px;
+    }
+    label {
+      font-weight: 500;
+    }
+    input, select, button {
+      margin: 0;
+      font-size: 1rem;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      padding: 7px 12px;
+      background: #fafbfc;
+      outline: none;
+      transition: border-color 0.22s;
+      margin-right: 9px;
+    }
+    input:focus, select:focus {
+      border-color: var(--primary);
+    }
+    .section {
+      margin-bottom: 25px;
+    }
+    button, .revoke-btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 2px 8px 0 rgba(255,62,108,0.09);
+      transition: background 0.2s, box-shadow 0.2s;
+      padding: 7px 18px;
+    }
+    button:hover, .revoke-btn:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 3px 16px 0 rgba(255,62,108,0.12);
+    }
+    .success {
+      color: var(--success);
+      margin-top: 7px;
+      font-size: 1.02em;
+    }
+    .error {
+      color: var(--error);
+      margin-top: 7px;
+      font-size: 1.02em;
+    }
+    .keys-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .key-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f7f5ff;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 5px 0 rgba(0,0,0,0.04);
+      padding: 13px 16px;
+      margin-bottom: 12px;
+      gap: 18px;
+      transition: box-shadow 0.15s;
+      position: relative;
+      animation: fadeIn 0.5s;
+    }
+    .key-info {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .key-label {
+      font-size: 1.02em;
+      color: var(--primary-dark);
+      font-weight: 600;
+      word-break: break-all;
+    }
+    .expire-label, .countdown {
+      font-size: 0.97em;
+      color: #555;
+      margin-top: 3px;
+      display: inline-block;
+    }
+    .countdown {
+      color: #2d8cff;
+      font-weight: 600;
+      margin-left: 12px;
+    }
+    .revoke-btn {
+      background: var(--error);
+      padding: 7px 13px;
+      border-radius: 7px;
+      font-size: 0.98em;
+      font-weight: 500;
+      margin-left: 8px;
+      transition: background 0.18s;
+      border: none;
+    }
+    .revoke-btn:active {
+      background: #c0392b;
+    }
+    .no-keys {
+      color: #888;
+      font-style: italic;
+      padding: 14px 0;
+      text-align: center;
+    }
+    @media (max-width: 650px) {
+      .container {
+        padding: 17px 4vw 16px 4vw;
+        margin: 15px 1vw;
+      }
+      .key-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 7px;
+      }
+      .revoke-btn {
+        margin-left: 0;
+      }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px);}
+      to { opacity: 1; transform: none;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>WAR JKT48 Auth Server</h2>
+    <div class="section">
+      <h3>Generate Key</h3>
+      <label for="expireDays">Expire dalam:</label>
+      <select id="expireDays">
+        <option value="1">1 Hari</option>
+        <option value="2">2 Hari</option>
+        <option value="3">3 Hari</option>
+      </select>
+      <button id="generateBtn">Generate Key</button>
+      <div id="genResult"></div>
+    </div>
+    <div class="section">
+      <h3>Key Aktif</h3>
+      <button id="listBtn" style="margin-bottom: 10px;">Refresh List</button>
+      <ul id="keysList" class="keys-list"></ul>
+    </div>
+  </div>
+  <script>
+    // === DYNAMIC ADMIN PROMPT ===
+    let adminSecret = localStorage.getItem('warjkt48_adminsecret');
+    if (!adminSecret) {
+      adminSecret = prompt("Masukkan admin secret:");
+      if (adminSecret) localStorage.setItem('warjkt48_adminsecret', adminSecret);
+    }
+
+    document.getElementById('generateBtn').onclick = async () => {
+      const expireDays = document.getElementById('expireDays').value;
+      const res = await fetch('/api/generate-key', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'x-admin-secret': adminSecret},
+        body: JSON.stringify({ expireDays })
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        document.getElementById('genResult').innerHTML = `<span class="error">${data.message}</span>`;
+        return;
+      }
+      const data = await res.json();
+      document.getElementById('genResult').innerHTML =
+        `<span class="success">Key berhasil dibuat:<br><b class="key-label">${data.apiKey}</b><br>
+        Expire: ${new Date(data.expireAt).toLocaleString()}</span>`;
+      listKeys();
+    };
+
+    let countdownIntervals = {};
+
+    function formatCountdown(ms) {
+      if (ms <= 0) return 'Expired';
+      const totalSec = Math.floor(ms / 1000);
+      const d = Math.floor(totalSec / (3600*24));
+      const h = Math.floor((totalSec % (3600*24)) / 3600);
+      const m = Math.floor((totalSec % 3600) / 60);
+      const s = totalSec % 60;
+      return `${d}d ${h}h ${m}m ${s}s`;
+    }
+
+    async function listKeys() {
+      // Clear old countdowns
+      Object.values(countdownIntervals).forEach(clearInterval);
+      countdownIntervals = {};
+
+      const res = await fetch('/api/list-keys', {
+        headers: {'x-admin-secret': adminSecret}
+      });
+      const keysList = document.getElementById('keysList');
+      keysList.innerHTML = "";
+
+      if (!res.ok) {
+        const data = await res.json();
+        keysList.innerHTML = `<li class="error">${data.message}</li>`;
+        return;
+      }
+      const data = await res.json();
+      if (data.activeKeys.length === 0) {
+        keysList.innerHTML = `<li class="no-keys">Tidak ada key aktif</li>`;
+        return;
+      }
+      // Show list
+      data.activeKeys.forEach(k => {
+        const li = document.createElement('li');
+        li.className = "key-card";
+        li.id = "key-" + k.apiKey;
+
+        li.innerHTML =
+          `<div class="key-info">
+            <div class="key-label">${k.apiKey}</div>
+            <div class="expire-label">Expire: <span class="expire-date">${new Date(k.expireAt).toLocaleString()}</span></div>
+            <span class="countdown" id="cd-${k.apiKey}"></span>
+          </div>
+          <button class="revoke-btn" onclick="window.revokeKey && window.revokeKey('${k.apiKey}')">Revoke</button>`;
+
+        keysList.appendChild(li);
+
+        // Countdown
+        function updateCountdown() {
+          const now = Date.now();
+          const msLeft = k.expireAt - now;
+          const ele = document.getElementById(`cd-${k.apiKey}`);
+          if (ele) {
+            if (msLeft <= 0) {
+              ele.textContent = 'Expired';
+              setTimeout(listKeys, 1100); // Auto refresh after 1s
+            } else {
+              ele.textContent = 'Sisa: ' + formatCountdown(msLeft);
+            }
+          }
+        }
+        updateCountdown();
+        countdownIntervals[k.apiKey] = setInterval(updateCountdown, 1000);
+      });
+    }
+
+    // Revoke function as global for inline onclick
+    window.revokeKey = async function(apiKey) {
+      if (!apiKey) return;
+      if (!confirm('Yakin ingin revoke key ini?')) return;
+      const res = await fetch('/api/revoke-key', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'x-admin-secret': adminSecret},
+        body: JSON.stringify({ apiKey })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        const row = document.getElementById('key-' + apiKey);
+        if (row) row.remove();
+      } else {
+        alert(data.message);
+      }
+    };
+
+    document.getElementById('listBtn').onclick = listKeys;
+    // Initial load
+    listKeys();
+
+    // Refresh list every 30s to keep in sync
+    setInterval(listKeys, 30000);
+  </script>
+</body>
+</html>
