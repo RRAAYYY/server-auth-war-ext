@@ -1,0 +1,14 @@
+[
+  {
+    "username": "admin",
+    "password": "$2b$10$Vup6IcBcKzQxo5TlCyL0ROtQdWp02Fk0Niw0OhFLFcjDUTPOmT..a",
+    "role": "superadmin",
+    "approved": true
+  },
+  {
+    "username": "topik",
+    "password": "$2b$10$WdJI8qwBLQrHOzS5MzkFa.KB60vd7SA2VI4lb3xBdGQ.psUm7KGWy",
+    "role": "admin",
+    "approved": true
+  }
+]

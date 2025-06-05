@@ -1,226 +1,398 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>WAR JKT48 Auth Server</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Panel API Key</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #ff3e6c;
-      --primary-dark: #d32a53;
-      --bg: #f9f9fb;
-      --card: #fff;
-      --text: #232323;
-      --border: #ececec;
-      --success: #43b581;
-      --error: #e74c3c;
-      --shadow: 0 2px 16px 0 rgba(0,0,0,0.06);
-      --radius: 14px;
-    }
     html, body {
-      background: var(--bg);
-      min-height: 100vh;
-      margin: 0;
-      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-      color: var(--text);
-    }
-    .container {
-      max-width: 540px;
-      margin: 40px auto 20px auto;
-      background: var(--card);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius);
-      padding: 34px 28px 24px 28px;
-      position: relative;
-      min-height: 400px;
-    }
-    h2 {
-      margin-top: 0;
-      margin-bottom: 8px;
-      text-align: center;
-      font-size: 2.05rem;
-      color: var(--primary-dark);
-      letter-spacing: 1px;
-    }
-    h3 {
-      margin-bottom: 10px;
-      color: var(--primary);
-      font-size: 1.15rem;
-      letter-spacing: 0.7px;
-      margin-top: 30px;
-    }
-    label {
-      font-weight: 500;
-    }
-    input, select, button {
-      margin: 0;
-      font-size: 1rem;
-      border-radius: 7px;
-      border: 1px solid var(--border);
-      padding: 7px 12px;
-      background: #fafbfc;
-      outline: none;
-      transition: border-color 0.22s;
-      margin-right: 9px;
-    }
-    input:focus, select:focus {
-      border-color: var(--primary);
-    }
-    .section {
-      margin-bottom: 25px;
-    }
-    button, .revoke-btn {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      box-shadow: 0 2px 8px 0 rgba(255,62,108,0.09);
-      transition: background 0.2s, box-shadow 0.2s;
-      padding: 7px 18px;
-    }
-    button:hover, .revoke-btn:hover {
-      background: var(--primary-dark);
-      box-shadow: 0 3px 16px 0 rgba(255,62,108,0.12);
-    }
-    .success {
-      color: var(--success);
-      margin-top: 7px;
-      font-size: 1.02em;
-    }
-    .error {
-      color: var(--error);
-      margin-top: 7px;
-      font-size: 1.02em;
-    }
-    .keys-list {
+      background: #1e2230;
+      color: #eaeaea;
+      font-family: 'Inter', Arial, sans-serif;
       margin: 0;
       padding: 0;
-      list-style: none;
+      height: 100%;
     }
-    .key-card {
+    .main-flex {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 220px;
+      background: #23273a;
+      border-right: 2px solid #30344b;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      min-height: 100vh;
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      z-index: 10;
+    }
+    .sidebar-header {
+      padding: 26px 0 12px 0;
+      text-align: center;
+      font-size: 1.13em;
+      font-weight: bold;
+      color: #7ed3fc;
+      border-bottom: 1px solid #31385a;
+      letter-spacing: 1px;
+      background: #23273a;
+    }
+    .sidebar-nav {
+      list-style: none;
+      margin: 0; padding: 0;
+    }
+    .sidebar-nav li {
+      padding: 17px 22px 17px 28px;
+      border-bottom: 1px solid #282c44;
+      color: #eaeaea;
+      cursor: pointer;
+      font-size: 1.08em;
+      font-weight: 600;
+      transition: background .14s;
+      position: relative;
+      background: transparent;
+    }
+    .sidebar-nav li.active, .sidebar-nav li:hover { background: #29304a; color: #7ed3fc;}
+    .sidebar-list-header {
+      font-size: .98em; color: #b5b9c9; margin: 13px 0 7px 21px; font-weight: bold;
+    }
+    .sidebar-list {
+      list-style: none; margin: 0; padding: 0 0 0 6px; font-size: 1.03em;
+      overflow-y: auto; flex: 1 1 auto;
+    }
+    .sidebar-list li {
+      padding: 8px 16px 8px 22px;
+      color: #eaeaea;
+      cursor: default;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      background: #f7f5ff;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      box-shadow: 0 1px 5px 0 rgba(0,0,0,0.04);
-      padding: 13px 16px;
-      margin-bottom: 12px;
-      gap: 18px;
-      transition: box-shadow 0.15s;
-      position: relative;
-      animation: fadeIn 0.5s;
+      gap: 8px;
+      transition: background .14s;
+      border-bottom: none;
+      background: transparent;
+      font-weight: normal;
+      border-radius: 6px;
     }
-    .key-info {
-      flex: 1 1 auto;
-      min-width: 0;
+    .sidebar-list li.me {
+      background: #232d47;
+      color: #7ed3fc;
+      font-weight: bold;
     }
-    .key-label {
-      font-size: 1.02em;
-      color: var(--primary-dark);
-      font-weight: 600;
-      word-break: break-all;
+    .sidebar-list li.superadmin::after {
+      content: '★';
+      color: #ffe082;
+      font-size: 1em;
+      margin-left: 9px;
+      opacity:.85;
     }
-    .expire-label, .countdown {
-      font-size: 0.97em;
-      color: #555;
-      margin-top: 3px;
+    .container {
       display: inline-block;
+      background: rgba(34,37,54,0.98);
+      border-radius: 14px;
+      box-shadow: 0 2px 36px #0008;
+      padding: 32px 26px 32px 26px;
+      position: relative;
+      margin: 40px auto 20px 240px;
+      min-width: 320px;
+      max-width: 95vw;
+      width: auto;
+      vertical-align: top;
     }
-    .countdown {
-      color: #2d8cff;
-      font-weight: 600;
-      margin-left: 12px;
-    }
-    .revoke-btn {
-      background: var(--error);
-      padding: 7px 13px;
+    .logout-btn { position: absolute; top: 16px; right: 22px; padding: 8px 18px; background: #e03f66; color: #fff; font-weight: 700; border-radius: 8px; border: none; font-size: 1em; cursor: pointer; z-index: 2; transition: opacity .15s;}
+    .logout-btn:active { opacity: .7; }
+    h2 { text-align: center; color: #7ed3fc; letter-spacing: 1px; font-weight: 700; margin-bottom: 26px;}
+    label { font-weight: 500; color: #c9e0f7;}
+    input, select, button {
+      font-size: 1.07rem;
       border-radius: 7px;
-      font-size: 0.98em;
-      font-weight: 500;
-      margin-left: 8px;
-      transition: background 0.18s;
-      border: none;
+      border: 1.5px solid #3e5175;
+      padding: 10px 12px;
+      background: #23273a;
+      color: #f1f1f1;
+      outline: none;
+      transition: border .18s;
+      font-family: inherit;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      width: 100%;
+      max-width: 350px;
     }
-    .revoke-btn:active {
-      background: #c0392b;
+    input:focus, select:focus { border-color: #4dc3ff; }
+    button { background: linear-gradient(90deg,#0ea6f7 0%, #5e4b8b 100%); color: #fff; border: none; cursor: pointer; font-weight: 700; box-shadow: 0 2px 8px 0 #0099ff17; transition: background 0.2s, box-shadow 0.2s, opacity .17s; padding: 10px 20px; border-radius: 7px; width: auto; min-width: 120px;}
+    button:active { opacity: .82; }
+    ul { padding-left: 0; margin-top: 0; margin-bottom: 0;}
+    .success { color: #43ffae; font-size: 1.04em; margin-top: 6px; font-weight: 600; letter-spacing: 0.5px; display: block; }
+    .error { color: #ff5b7c; font-size: 1.04em; margin-top: 6px; font-weight: 600; letter-spacing: 0.5px; display: block; }
+    .admin-item { margin-bottom: 8px; padding: 7px 0; border-bottom: 1px solid #2e3040;}
+    /* Key list style */
+    .key-list-section { margin-top: 46px; }
+    .key-list-title { color: #e89cff; font-size: 1.13em; font-weight: bold; margin-bottom: 12px; }
+    .key-list-search-wrap { margin-bottom: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px;}
+    .key-list-search { width: 180px; max-width: 70vw; padding: 8px 10px; margin-bottom: 0; }
+    .key-list-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: transparent;
+      margin-bottom: 10px;
     }
-    .no-keys {
-      color: #888;
-      font-style: italic;
-      padding: 14px 0;
-      text-align: center;
+    .key-list-table th, .key-list-table td {
+      padding: 8px 6px;
+      border-bottom: 1px solid #29304a;
+      text-align: left;
+      font-size: 0.99em;
+      word-break: break-all;
+      vertical-align: middle;
+    }
+    .key-list-table th { color: #7ed3fc; background: #23273a; }
+    .key-list-table td.expired { color: #ff5959; }
+    .no-keys { color: #7da9c7; font-style: italic; padding: 14px 0; text-align: center;}
+    .copy-btn {
+      background: #3e7ad1; color: #fff; border: none; border-radius: 6px;
+      padding: 4px 10px; font-size: 0.95em; font-weight: 600; cursor: pointer;
+      margin-left: 2px; transition: opacity .15s;
+    }
+    .copy-btn:active { opacity: .7; }
+    .revoke-btn {
+      background: #e03f66; color: #fff; border: none; border-radius: 6px;
+      padding: 4px 10px; font-size: 0.95em; font-weight: 600; cursor: pointer;
+      margin-left: 2px; transition: opacity .18s;
+    }
+    .revoke-btn:active { opacity: .8; }
+    .rename-btn {
+      background: #0ea6f7; color: #fff; border: none; border-radius: 6px;
+      padding: 4px 10px; font-size: 0.95em; font-weight: 600; cursor: pointer;
+      margin-left: 2px; transition: opacity .15s;
+    }
+    .rename-btn:active { opacity: .7; }
+    .rename-input {
+      width: 100px; border-radius: 4px; border: 1px solid #4dc3ff; background: #23273a; color: #fff; padding: 4px 6px; font-size: .96em; margin-right: 3px;
+    }
+    .extend-btn {
+      background: #43ffae; color: #222; border: none; border-radius: 6px;
+      padding: 4px 10px; font-size: 0.95em; font-weight: 600; cursor: pointer;
+      margin-left: 2px; transition: opacity .14s;
+    }
+    .extend-btn:active { opacity: .7; }
+    .extend-select {
+      background: #23273a; color: #fff; border-radius: 5px; border: 1px solid #4dc3ff;
+      font-size: .96em; margin-left: 4px; padding: 4px 7px;
+    }
+    @media (max-width: 900px) {
+      .sidebar { width: 54px; }
+      .container { margin-left: 65px; }
+      .sidebar-header { font-size:0.97em; padding:20px 0 8px 0;}
+      .sidebar-nav li { font-size:1em; padding-left:14px; }
+      .sidebar-list-header {margin-left:5px;}
+      .sidebar-list li span { display:none;}
     }
     @media (max-width: 650px) {
-      .container {
-        padding: 17px 4vw 16px 4vw;
-        margin: 15px 1vw;
-      }
-      .key-card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 7px;
-      }
-      .revoke-btn {
-        margin-left: 0;
-      }
+      .sidebar{ display:none; }
+      .container{ margin-left:0; padding:13px 3vw 14px 3vw; margin:15px 1vw;}
+      input, select { max-width: 98vw;}
+      .key-list-table th, .key-list-table td { font-size: 0.93em; }
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(16px);}
-      to { opacity: 1; transform: none;}
+    .flex-center {
+      min-height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1e2230;
+      position: fixed;
+      left: 0; top: 0;
+      z-index: 100;
+      transition: background 0.2s;
+    }
+    .login-card {
+      background: #24273a;
+      border-radius: 13px;
+      box-shadow: 0 2px 16px #0007;
+      padding: 38px 32px 30px 32px;
+      min-width: 270px;
+      width: fit-content;
+      max-width: 96vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1.5px solid #314584;
+      color: #fff;
+      margin: 0;
+    }
+    .login-card input { margin-bottom: 18px; width: 240px; max-width: 80vw;}
+    .login-title { font-size: 1.3em; font-weight: 700; color: #7ed3fc; margin-bottom: 12px; text-align: center;}
+    .login-btn { background: linear-gradient(90deg,#0ea6f7 0%, #5e4b8b 100%); color: #fff; font-weight: 600; border-radius: 7px; border: none; padding: 10px 0; font-size: 1.07em; width: 100%; margin-top: 8px; cursor: pointer; transition: opacity .15s;}
+    .login-btn:active { opacity: .75; }
+    @media (max-width: 650px) {
+      .login-card input { min-width: 0; width: 90vw; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>WAR JKT48 Auth Server</h2>
-    <div class="section">
-      <h3>Generate Key</h3>
-      <label for="expireDays">Expire dalam:</label>
-      <select id="expireDays">
-        <option value="1">1 Hari</option>
-        <option value="2">2 Hari</option>
-        <option value="3">3 Hari</option>
-      </select>
-      <button id="generateBtn">Generate Key</button>
-      <div id="genResult"></div>
+  <div class="main-flex">
+    <nav class="sidebar" id="sidebar" style="display:none;">
+      <div class="sidebar-header">Admin Panel</div>
+      <ul class="sidebar-nav">
+        <li id="navAdmins" class="active" onclick="showPage('admins')">Daftar Admin</li>
+        <li id="navKeys" onclick="showPage('keys')">Generate Key</li>
+      </ul>
+      <div class="sidebar-list-header">List Admin:</div>
+      <ul class="sidebar-list" id="sidebarAdminList"></ul>
+    </nav>
+    <button class="logout-btn" id="logoutBtn" style="display:none;">Logout</button>
+    <div class="container" id="mainPanel" style="display:none;">
+      <!-- Halaman Daftar Admin -->
+      <div id="pageAdmins">
+        <h2>Daftar Admin</h2>
+        <ul id="adminsList"></ul>
+      </div>
+      <!-- Halaman Generate Key -->
+      <div id="pageKeys" style="display:none;">
+        <h2>Generate Key</h2>
+        <label for="keyName">Nama Key (opsional):</label>
+        <input type="text" id="keyName" maxlength="48" placeholder="Contoh: Bot Telegram, Device 1, dst...">
+        <label for="expireDays">Masa Berlaku:</label>
+        <select id="expireDays">
+          <option value="1">1 Hari</option>
+          <option value="2">2 Hari</option>
+          <option value="3">3 Hari</option>
+        </select>
+        <button id="generateBtn">Generate Key</button>
+        <div id="genResult"></div>
+        <!-- Key List Section -->
+        <div class="key-list-section">
+          <div class="key-list-title">Key Aktif</div>
+          <div class="key-list-search-wrap">
+            <input id="searchKeyInput" class="key-list-search" type="text" placeholder="Cari nama key..." autocomplete="off">
+            <button id="listBtn" style="margin-bottom:0;">Refresh List</button>
+          </div>
+          <div id="keysListWrap">
+            <table class="key-list-table" id="keysListTable" style="display:none;">
+              <thead>
+                <tr>
+                  <th>API Key</th>
+                  <th>Nama Key</th>
+                  <th>Expired<br><span style="font-weight:400;font-size:.97em;">(Countdown)</span></th>
+                  <th>Copy</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="keysList"></tbody>
+            </table>
+            <div id="noKeysText" class="no-keys" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="section">
-      <h3>Key Aktif</h3>
-      <button id="listBtn" style="margin-bottom: 10px;">Refresh List</button>
-      <ul id="keysList" class="keys-list"></ul>
+    <!-- FLEX-CENTER LOGIN -->
+    <div class="flex-center" id="loginFlex" style="display:none;">
+      <div class="login-card" id="loginCard">
+        <div class="login-title">Login Admin</div>
+        <input type="text" id="loginUser" placeholder="Username" autocomplete="username">
+        <input type="password" id="loginPass" placeholder="Password" autocomplete="current-password">
+        <button class="login-btn" id="loginBtn">Login</button>
+        <div id="loginMsg" class="error" style="margin-top:10px;min-height:1em;"></div>
+      </div>
+    </div>
+    <!-- Modal extend waktu -->
+    <div class="flex-center" id="extendModal" style="display:none;z-index:500;">
+      <div class="login-card" style="padding:28px 28px 20px 28px;min-width:230px;max-width:98vw;">
+        <div style="font-size:1.13em;font-weight:600;margin-bottom:14px;">Tambah Waktu Key</div>
+        <div id="extendModalKeyName" style="color:#7ed3fc;margin-bottom:10px;"></div>
+        <label for="extendDays">Tambah waktu:</label>
+        <select id="extendDays" class="extend-select">
+          <option value="1">1 Hari</option>
+          <option value="2">2 Hari</option>
+          <option value="3">3 Hari</option>
+        </select>
+        <button class="extend-btn" id="confirmExtendBtn">Tambah</button>
+        <button class="revoke-btn" id="cancelExtendBtn" style="margin-left:10px;">Batal</button>
+        <div id="extendMsg" class="error" style="min-height:1.2em;margin-top:10px;"></div>
+      </div>
     </div>
   </div>
   <script>
-    // === DYNAMIC ADMIN PROMPT ===
-    let adminSecret = localStorage.getItem('warjkt48_adminsecret');
-    if (!adminSecret) {
-      adminSecret = prompt("Masukkan admin secret:");
-      if (adminSecret) localStorage.setItem('warjkt48_adminsecret', adminSecret);
-    }
+    let myUsername = "", myRole = "";
+    let allKeyData = [];
+    let currentEditingKey = null;
+    let currentExtendKey = null;
+    let countdownTimer = null;
 
-    document.getElementById('generateBtn').onclick = async () => {
-      const expireDays = document.getElementById('expireDays').value;
-      const res = await fetch('/api/generate-key', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json', 'x-admin-secret': adminSecret},
-        body: JSON.stringify({ expireDays })
-      });
-      if (!res.ok) {
-        const data = await res.json();
-        document.getElementById('genResult').innerHTML = `<span class="error">${data.message}</span>`;
-        return;
+    function showPanel(loggedIn, role="") {
+      document.getElementById('mainPanel').style.display = loggedIn ? '' : 'none';
+      document.getElementById('logoutBtn').style.display = loggedIn ? '' : 'none';
+      document.getElementById('loginFlex').style.display = loggedIn ? 'none' : 'flex';
+      document.getElementById('sidebar').style.display = loggedIn ? '' : 'none';
+      if (loggedIn) {
+        showPage('admins');
+        loadAdmins();
+      } else {
+        document.getElementById('adminsList').innerHTML = "";
+        document.getElementById('sidebarAdminList').innerHTML = "";
+        clearCountdown();
       }
+    }
+    function showPage(page) {
+      document.getElementById('pageAdmins').style.display = (page === 'admins') ? '' : 'none';
+      document.getElementById('pageKeys').style.display = (page === 'keys') ? '' : 'none';
+      document.getElementById('navAdmins').classList.toggle('active', page === 'admins');
+      document.getElementById('navKeys').classList.toggle('active', page === 'keys');
+      if (page === 'admins') loadAdmins();
+      if (page === 'keys') listKeys();
+    }
+    async function checkStatus() {
+      const res = await fetch('/api/status', { credentials: 'include' });
       const data = await res.json();
-      document.getElementById('genResult').innerHTML =
-        `<span class="success">Key berhasil dibuat:<br><b class="key-label">${data.apiKey}</b><br>
-        Expire: ${new Date(data.expireAt).toLocaleString()}</span>`;
-      listKeys();
+      myUsername = data.username || "";
+      myRole = data.role || "";
+      showPanel(!!data.loggedIn, data.role);
+    }
+    document.getElementById('loginBtn').onclick = async () => {
+      const username = document.getElementById('loginUser').value.trim();
+      const password = document.getElementById('loginPass').value.trim();
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        credentials: 'include',
+        body: JSON.stringify({ username, password })
+      });
+      if(res.ok) {
+        checkStatus();
+      } else {
+        const data = await res.json();
+        document.getElementById('loginMsg').textContent = data.message || "Login gagal!";
+      }
     };
-
-    let countdownIntervals = {};
+    document.getElementById('logoutBtn').onclick = async () => {
+      await fetch('/api/logout', { method:'POST', credentials:'include' });
+      checkStatus();
+    };
+    window.showPage = showPage;
+    async function loadAdmins() {
+      const res = await fetch('/api/admins', { credentials:'include' });
+      const data = await res.json();
+      // Sidebar
+      const sidebar = document.getElementById('sidebarAdminList');
+      sidebar.innerHTML = "";
+      data.admins.forEach(a=>{
+        const li = document.createElement('li');
+        if(a.username===myUsername) li.classList.add('me');
+        if(a.role==='superadmin') li.classList.add('superadmin');
+        li.innerHTML = `<span>${a.username}</span>`;
+        sidebar.appendChild(li);
+      });
+      // Main list
+      const ul = document.getElementById('adminsList');
+      ul.innerHTML = "";
+      data.admins.forEach(a=>{
+        const li = document.createElement('li');
+        li.className = "admin-item";
+        li.innerHTML = `<span style="font-weight:600;color:#7ed3fc">${a.username}</span> <span style="font-size:.95em;color:#b5b9c9;">(${a.role})</span>`;
+        ul.appendChild(li);
+      });
+    }
 
     function formatCountdown(ms) {
       if (ms <= 0) return 'Expired';
@@ -229,89 +401,231 @@
       const h = Math.floor((totalSec % (3600*24)) / 3600);
       const m = Math.floor((totalSec % 3600) / 60);
       const s = totalSec % 60;
-      return `${d}d ${h}h ${m}m ${s}s`;
+      let out = "";
+      if (d>0) out += d+"d ";
+      if (h>0 || d>0) out += h+"h ";
+      if (m>0 || h>0 || d>0) out += m+"m ";
+      out += s+"s";
+      return out;
+    }
+
+    let countdownInterval = null;
+    function clearCountdown() {
+      if (countdownInterval) clearInterval(countdownInterval);
+      countdownInterval = null;
     }
 
     async function listKeys() {
-      // Clear old countdowns
-      Object.values(countdownIntervals).forEach(clearInterval);
-      countdownIntervals = {};
-
-      const res = await fetch('/api/list-keys', {
-        headers: {'x-admin-secret': adminSecret}
-      });
+      clearCountdown();
       const keysList = document.getElementById('keysList');
-      keysList.innerHTML = "";
+      const keysListTable = document.getElementById('keysListTable');
+      const noKeysText = document.getElementById('noKeysText');
+      keysList.innerHTML = '';
+      keysListTable.style.display = 'none';
+      noKeysText.style.display = 'none';
 
+      const res = await fetch('/api/list-keys', { credentials: 'include' });
       if (!res.ok) {
+        if (res.status === 401) { checkStatus(); return; }
         const data = await res.json();
-        keysList.innerHTML = `<li class="error">${data.message}</li>`;
+        noKeysText.textContent = data.message || "Gagal mengambil daftar key!";
+        noKeysText.style.display = '';
+        allKeyData = [];
         return;
       }
       const data = await res.json();
-      if (data.activeKeys.length === 0) {
-        keysList.innerHTML = `<li class="no-keys">Tidak ada key aktif</li>`;
+      allKeyData = data.activeKeys || [];
+      renderKeyList();
+      setupCountdown();
+    }
+
+    function renderKeyList() {
+      const searchVal = (document.getElementById('searchKeyInput').value || '').toLowerCase();
+      const keysList = document.getElementById('keysList');
+      const keysListTable = document.getElementById('keysListTable');
+      const noKeysText = document.getElementById('noKeysText');
+      keysList.innerHTML = '';
+      keysListTable.style.display = 'none';
+      noKeysText.style.display = 'none';
+
+      let filtered = allKeyData;
+      if (searchVal) {
+        filtered = allKeyData.filter(k => (k.name||'').toLowerCase().includes(searchVal));
+      }
+      if (!filtered || filtered.length === 0) {
+        noKeysText.textContent = "Tidak ada key aktif" + (searchVal ? " sesuai pencarian." : "");
+        noKeysText.style.display = '';
         return;
       }
-      // Show list
-      data.activeKeys.forEach(k => {
-        const li = document.createElement('li');
-        li.className = "key-card";
-        li.id = "key-" + k.apiKey;
-
-        li.innerHTML =
-          `<div class="key-info">
-            <div class="key-label">${k.apiKey}</div>
-            <div class="expire-label">Expire: <span class="expire-date">${new Date(k.expireAt).toLocaleString()}</span></div>
-            <span class="countdown" id="cd-${k.apiKey}"></span>
-          </div>
-          <button class="revoke-btn" onclick="window.revokeKey && window.revokeKey('${k.apiKey}')">Revoke</button>`;
-
-        keysList.appendChild(li);
-
-        // Countdown
-        function updateCountdown() {
-          const now = Date.now();
-          const msLeft = k.expireAt - now;
-          const ele = document.getElementById(`cd-${k.apiKey}`);
-          if (ele) {
-            if (msLeft <= 0) {
-              ele.textContent = 'Expired';
-              setTimeout(listKeys, 1100); // Auto refresh after 1s
-            } else {
-              ele.textContent = 'Sisa: ' + formatCountdown(msLeft);
-            }
-          }
+      keysListTable.style.display = '';
+      filtered.forEach(k => {
+        const tr = document.createElement('tr');
+        // Nama Key column: if editing, show input
+        let nameCol = "";
+        if (currentEditingKey === k.apiKey) {
+          nameCol = `<input class="rename-input" id="renameInput" value="${k.name ? k.name.replace(/"/g, "&quot;") : ""}" maxlength="48"/>
+            <button class="rename-btn" onclick="saveRenameKey('${k.apiKey}')">Simpan</button>
+            <button class="rename-btn" style="background:#666;" onclick="cancelRenameKey()">Batal</button>
+          `;
+        } else {
+          nameCol = `<span>${k.name || '-'}</span>
+            <button class="rename-btn" onclick="editRenameKey('${k.apiKey}')">Rename</button>`;
         }
-        updateCountdown();
-        countdownIntervals[k.apiKey] = setInterval(updateCountdown, 1000);
+        let expiredCol = `<span id="expdate-${k.apiKey}">${new Date(k.expiry*1000).toLocaleString("id-ID", { hour12:false })}</span>
+            <br><span style="color:#43ffae;font-size:.97em;" id="countdown-${k.apiKey}"></span>`;
+        let revokeCol = `<button class="revoke-btn" onclick="revokeKey('${k.apiKey}')">Revoke</button>
+        <button class="extend-btn" onclick="showExtendModal('${k.apiKey}')">Tambah Waktu</button>`;
+        tr.innerHTML = `
+          <td>${k.apiKey}</td>
+          <td>${nameCol}</td>
+          <td>${expiredCol}</td>
+          <td><button class="copy-btn" onclick="navigator.clipboard.writeText('${k.apiKey}')">Copy</button></td>
+          <td>${revokeCol}</td>
+        `;
+        keysList.appendChild(tr);
       });
     }
 
-    // Revoke function as global for inline onclick
-    window.revokeKey = async function(apiKey) {
-      if (!apiKey) return;
-      if (!confirm('Yakin ingin revoke key ini?')) return;
-      const res = await fetch('/api/revoke-key', {
+    function setupCountdown() {
+      clearCountdown();
+      function updateAllCountdowns() {
+        const searchVal = (document.getElementById('searchKeyInput').value || '').toLowerCase();
+        let filtered = allKeyData;
+        if (searchVal) {
+          filtered = allKeyData.filter(k => (k.name||'').toLowerCase().includes(searchVal));
+        }
+        const now = Date.now();
+        filtered.forEach(k => {
+          const ms = k.expiry*1000 - now;
+          const el = document.getElementById('countdown-' + k.apiKey);
+          if (el) el.textContent = formatCountdown(ms);
+          // expired: update list
+          if (ms <= 0) {
+            listKeys();
+          }
+        });
+      }
+      updateAllCountdowns();
+      countdownInterval = setInterval(updateAllCountdowns, 1000);
+    }
+
+    document.getElementById('listBtn').onclick = listKeys;
+    document.getElementById('searchKeyInput').oninput = function() {
+      renderKeyList();
+      setupCountdown();
+    };
+
+    // Rename key logic
+    window.editRenameKey = function(apiKey) {
+      currentEditingKey = apiKey;
+      renderKeyList();
+      setupCountdown();
+      setTimeout(() => {
+        const input = document.getElementById('renameInput');
+        if (input) input.focus();
+      }, 10);
+    };
+    window.cancelRenameKey = function() {
+      currentEditingKey = null;
+      renderKeyList();
+      setupCountdown();
+    };
+    window.saveRenameKey = async function(apiKey) {
+      const input = document.getElementById('renameInput');
+      if (!input) return;
+      const name = input.value.trim();
+      const res = await fetch('/api/rename-key', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json', 'x-admin-secret': adminSecret},
-        body: JSON.stringify({ apiKey })
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ apiKey, name })
       });
-      const data = await res.json();
       if (res.ok) {
-        const row = document.getElementById('key-' + apiKey);
-        if (row) row.remove();
+        currentEditingKey = null;
+        await listKeys();
       } else {
-        alert(data.message);
+        alert('Gagal rename key!');
       }
     };
 
-    document.getElementById('listBtn').onclick = listKeys;
-    // Initial load
-    listKeys();
+    // Revoke key logic
+    window.revokeKey = async function(apiKey) {
+      if (!confirm('Yakin ingin revoke key ini?')) return;
+      const res = await fetch('/api/revoke-key', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ apiKey })
+      });
+      if (res.ok) {
+        await listKeys();
+      } else {
+        if (res.status === 401) { checkStatus(); return; }
+        const data = await res.json();
+        alert(data.message || "Gagal revoke key!");
+      }
+    };
 
-    // Refresh list every 30s to keep in sync
-    setInterval(listKeys, 30000);
+    // -------- TAMBAH WAKTU KEY --------
+    function showExtendModal(apiKey) {
+      currentExtendKey = apiKey;
+      const keyObj = allKeyData.find(k => k.apiKey === apiKey);
+      document.getElementById('extendModal').style.display = '';
+      document.getElementById('extendModalKeyName').textContent = (keyObj?.name || 'Tanpa Nama');
+      document.getElementById('extendMsg').textContent = '';
+      document.getElementById('extendDays').value = "1";
+    }
+    document.getElementById('cancelExtendBtn').onclick = () => {
+      document.getElementById('extendModal').style.display = 'none';
+      currentExtendKey = null;
+    };
+    document.getElementById('confirmExtendBtn').onclick = async () => {
+      if (!currentExtendKey) return;
+      const days = document.getElementById('extendDays').value;
+      if (!["1","2","3"].includes(days)) {
+        document.getElementById('extendMsg').textContent = "Silakan pilih hari!";
+        return;
+      }
+      document.getElementById('extendMsg').textContent = "";
+      const res = await fetch('/api/extend-key', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ apiKey: currentExtendKey, days: Number(days) })
+      });
+      if (res.ok) {
+        document.getElementById('extendModal').style.display = 'none';
+        currentExtendKey = null;
+        await listKeys();
+      } else {
+        const data = await res.json();
+        document.getElementById('extendMsg').textContent = data.message || "Gagal menambah waktu!";
+      }
+    };
+
+    document.getElementById('generateBtn').onclick = async () => {
+      const expireDays = document.getElementById('expireDays').value;
+      const keyName = document.getElementById('keyName').value.trim();
+      const res = await fetch('/api/generate-key', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify({ expireDays, name: keyName })
+      });
+      if (!res.ok) {
+        if (res.status === 401) { checkStatus(); return; }
+        const data = await res.json();
+        document.getElementById('genResult').innerHTML = `<span class="error">${data.message}</span>`;
+        return;
+      }
+      const data = await res.json();
+      document.getElementById('genResult').innerHTML =
+        `<span class="success">Key berhasil dibuat:<br><b style="word-break:break-all">${data.apiKey}</b><br>
+        ${data.name ? `<span style="color:#e89cff;">"${data.name}"</span><br>` : ""}
+        Expired: ${new Date(data.expiry*1000).toLocaleString("id-ID", { hour12:false })}</span>`;
+      await listKeys();
+    };
+    checkStatus();
   </script>
 </body>
 </html>
