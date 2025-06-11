@@ -1,128 +1,238 @@
 [
   {
-    "apiKey": "f7068b48ed38bb29ca75845b4dff38b15661963574fd9d23",
-    "expireAt": 1749168120278,
+    "apiKey": "853cb682623877a86d27695ee84023780dc6139a255f9f3e",
+    "expireAt": 1749326212038,
     "revoked": true,
-    "used": false
+    "name": "",
+    "deviceIds": [
+      {
+        "deviceId": "76cdd342-c0f9-48c8-bd71-437237f0dfba",
+        "status": "offline",
+        "lastActive": 1749260247827
+      }
+    ],
+    "used": true,
+    "maxDevices": 1
   },
   {
-    "apiKey": "9e4ccecbd14b227b0c9c621af3f61dcbe063e49537858031",
-    "expireAt": 1749168135237,
+    "apiKey": "4ca7029959b322629118a170a350641f49b33a93d82acf41",
+    "expireAt": 1749334284271,
     "revoked": true,
-    "used": false
+    "name": "Trisha",
+    "deviceIds": [
+      {
+        "deviceId": "bd3e029f-7087-4acf-a0e1-7a45f32a0a3d",
+        "status": "offline",
+        "lastActive": 1749250440000
+      },
+      {
+        "deviceId": "93fcf6de-ecbc-4349-941a-cbd685c7a756",
+        "status": "offline",
+        "lastActive": 1749247952560
+      }
+    ],
+    "used": true,
+    "maxDevices": 2
   },
   {
-    "apiKey": "7492ebbf56281c12fbc57adb60ca434eaa3b5771c9ecda58",
-    "expireAt": 1749168216182,
+    "apiKey": "4bd3cbcf61d9ab992b5f6859e101bb18f2fdec6931437dcf",
+    "expireAt": 1749346652100,
     "revoked": true,
-    "used": false
+    "name": "",
+    "deviceIds": [
+      {
+        "deviceId": "d8ce813b-ec00-4292-8a20-208c90823dd1",
+        "status": "offline",
+        "lastActive": 1749280154238
+      }
+    ],
+    "used": true,
+    "maxDevices": 1
   },
   {
-    "apiKey": "628389531ebbfc3ef1e98a2dfae452ff6fe28fa6c9f66f6a",
-    "expireAt": 1749169439913,
+    "apiKey": "d7775ccb580d846781ca5af8661ff4f2a88cfe33b840e80e",
+    "expireAt": 1749366602277,
     "revoked": true,
-    "used": true
+    "name": "",
+    "deviceIds": [
+      {
+        "deviceId": "6f5bd0f9-d86b-49c9-ba19-89de1ceb63fa",
+        "status": "offline",
+        "lastActive": 1749280209321
+      }
+    ],
+    "used": true,
+    "maxDevices": 1
   },
   {
-    "apiKey": "ce80cab06e674d755de9846bc9a81d9f4e983b887882451e",
-    "expireAt": 1749170236847,
+    "apiKey": "2fdd54f75ed59e7969be43d4d8992c23a790188fc0777a94",
+    "expireAt": 1749366674843,
     "revoked": true,
-    "used": false
+    "name": "",
+    "deviceIds": [
+      {
+        "deviceId": "19d50186-23f5-407e-b399-52802d68cdf6",
+        "status": "offline",
+        "lastActive": 1749289615698
+      }
+    ],
+    "used": true,
+    "maxDevices": 1
   },
   {
-    "apiKey": "f16420998229dcafd9ca0715393d010ebda31938d59fd6ac",
-    "expireAt": 1749171047862,
+    "apiKey": "b74867e5f50401a3624091e1c940d50e5ab852c5a3edff26",
+    "expireAt": 1749370640735,
     "revoked": true,
-    "used": true
+    "name": "",
+    "deviceIds": [],
+    "used": false,
+    "maxDevices": 1
   },
   {
-    "apiKey": "bb7773a826cdcd2d6d71c379a093af3373f21bcd4e79edc0",
-    "expireAt": 1749171065636,
+    "apiKey": "52bf2abfd35cabc634bc2fcd9233dada9e849f7b49248d65",
+    "expireAt": 1749376029324,
     "revoked": true,
-    "used": true
+    "name": "",
+    "deviceIds": [
+      {
+        "deviceId": "19d50186-23f5-407e-b399-52802d68cdf6",
+        "status": "offline",
+        "lastActive": 1749290262759
+      }
+    ],
+    "used": true,
+    "maxDevices": 1
   },
   {
-    "apiKey": "19fe2e4e767137885e3a62d17d0b10a6e2b4a1c3ecf9e506",
-    "expireAt": 1749171147726,
+    "apiKey": "9a9e58d3e7f2ffa5a51e1d73ef5457d2c3a15ab8721339f9",
+    "expireAt": 1749393018643,
     "revoked": true,
-    "used": true
+    "name": "",
+    "deviceIds": [],
+    "used": false,
+    "maxDevices": 1
   },
   {
-    "apiKey": "17bc498dacc09fb68abce4bd5334e63ba4dda6f23ef4a142",
-    "expireAt": 1749171471563,
-    "revoked": true
-  },
-  {
-    "apiKey": "b8501f3f5daabebf1dd7ee27b1a42a6a566b8fb5418ada9f",
-    "expireAt": 1749171705480,
-    "revoked": true
-  },
-  {
-    "apiKey": "583577377c13c0ec39567e681ab25349f9485618a4816596",
-    "expireAt": 1749258312365,
-    "revoked": true
-  },
-  {
-    "apiKey": "f2eb6c36a7fa96ba66ffc7b5b7fcf7f3f34085d94eb6bcae",
-    "expireAt": 1749172283038,
-    "revoked": true
-  },
-  {
-    "apiKey": "1c9815a0021f1224d4915eda94ce74e7d4c51e54e9f01e47",
-    "expireAt": 1749172584940,
-    "revoked": true
-  },
-  {
-    "apiKey": "8e8dfea832309a7d54a22baa4aee0f2ffe4f4b0e097cb3fa",
-    "expireAt": 1749345695541,
-    "revoked": true
-  },
-  {
-    "apiKey": "ab19d4c6e9f2659253873059f2aa67314c32413f549c983b",
-    "expireAt": 1749173255981,
+    "apiKey": "c6c6ae814412670910bf9bdc773aa6105dbb6f3d9282524c",
+    "expireAt": 1749401579702,
     "revoked": true,
-    "name": "raey"
+    "name": "",
+    "deviceIds": [
+      {
+        "deviceId": "226427a1-14a8-4214-b4fc-722a29d1f172",
+        "status": "offline",
+        "lastActive": 1749315630233
+      }
+    ],
+    "used": true,
+    "maxDevices": 1
   },
   {
-    "apiKey": "a244667c14ff6019c7b2a9a59b6293640ada03192b423383",
-    "expireAt": 1749176351091,
-    "revoked": true,
-    "name": "topik"
+    "apiKey": "0ee8c371225cc15356258597dc264d6bd8da270ffe269017",
+    "expireAt": 1749681085355,
+    "revoked": false,
+    "name": "topik",
+    "deviceIds": [
+      {
+        "deviceId": "6dcabe59-b944-48ed-9c2b-825e7e6b81d9",
+        "status": "offline",
+        "lastActive": 1749564694271
+      }
+    ],
+    "used": true,
+    "maxDevices": 1
   },
   {
-    "apiKey": "32d57d9a3c61eac7dca5432060b1e549ec5c89bfb2313c51",
-    "expireAt": 1749177213123,
-    "revoked": true,
-    "name": ""
+    "apiKey": "9fa452db9ef4a148632d04c87a2d63b4e5014ad0a2754f51",
+    "expireAt": 1749681196980,
+    "revoked": false,
+    "name": "MANGUN",
+    "deviceIds": [
+      {
+        "deviceId": "a9d2868c-ebec-4efe-a23f-fe66994dffd0",
+        "status": "offline",
+        "lastActive": 1749624655409
+      }
+    ],
+    "used": true,
+    "maxDevices": 1
   },
   {
-    "apiKey": "189d0ed3acc080402745bf94afc6e32d7748b0f48884efb8",
-    "expireAt": 1749263621010,
-    "revoked": true,
-    "name": ""
+    "apiKey": "f286dce7cbd028e7059aee5afb228e988944b09f20f8c56e",
+    "expireAt": 1749681448399,
+    "revoked": false,
+    "name": "ACID",
+    "deviceIds": [
+      {
+        "deviceId": "09055e2d-bb1d-49f3-9c31-d67db5a01523",
+        "status": "online",
+        "lastActive": 1749651262651
+      }
+    ],
+    "used": true,
+    "maxDevices": 1
   },
   {
-    "apiKey": "c36defd36112ccedc1305a1ddfe60245038322a27142231f",
-    "expireAt": 1749350023266,
+    "apiKey": "7b06a4033b7ebd03abe4d66b019581bbe7d352cbc8eaa220",
+    "expireAt": 1749508921230,
     "revoked": true,
-    "name": ""
+    "name": "",
+    "deviceIds": [
+      {
+        "deviceId": "62a98b8e-e554-42ce-94b4-84d862b808cf",
+        "status": "offline",
+        "lastActive": 1749423462234
+      }
+    ],
+    "used": true,
+    "maxDevices": 1
   },
   {
-    "apiKey": "c0fccc3ceeee322d5c12e20e2894f18b6f88389010f40ed4",
-    "expireAt": 1749609721410,
-    "revoked": true,
-    "name": ""
+    "apiKey": "738b1db0d40115e93545cf243701015a8f749507cdef1fb5",
+    "expireAt": 1749682755837,
+    "revoked": false,
+    "name": "Bobc",
+    "deviceIds": [],
+    "used": false,
+    "maxDevices": 1
   },
   {
-    "apiKey": "c9645625dc500634ebec72b2bd2d1c19534115e80d090eac",
-    "expireAt": 1749523395752,
-    "revoked": true,
-    "name": ""
+    "apiKey": "94b3b0b70b92640714736322da5220c5aa8c2e58eaa94e9e",
+    "expireAt": 1749683099380,
+    "revoked": false,
+    "name": "Mulie",
+    "deviceIds": [],
+    "used": false,
+    "maxDevices": 1
   },
   {
-    "apiKey": "d3639598b46ae9b222b2e8938f0c6cc50044849f12c75f23",
-    "expireAt": 1749351792469,
-    "revoked": true,
-    "name": ""
+    "apiKey": "4bc47e81a8e9aa6d15e09e62021fd8a89ceecf5625ace5f2",
+    "expireAt": 1749705421901,
+    "revoked": false,
+    "name": "PABLO",
+    "deviceIds": [
+      {
+        "deviceId": "29f8dccb-6e9f-4c72-8cd4-84ebab27a552",
+        "status": "offline",
+        "lastActive": 1749574816737
+      }
+    ],
+    "used": true,
+    "maxDevices": 1
+  },
+  {
+    "apiKey": "50fee2ef5d7cbd1d0e7190bdc270b4997cf745ac657a00d6",
+    "expireAt": 1749724325819,
+    "revoked": false,
+    "name": "New Mangun",
+    "deviceIds": [
+      {
+        "deviceId": "42336de5-92b9-4da2-ad3a-128cdac8b06b",
+        "status": "online",
+        "lastActive": 1749651306210
+      }
+    ],
+    "used": true,
+    "maxDevices": 1
   }
 ]
